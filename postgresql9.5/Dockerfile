@@ -1,12 +1,13 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Tulio Ruiz <tulio@vauxoo.com>
 
 # Configure locale
+RUN apt-get update && apt-get install wget -yq
+RUN apt-get install -y locales
 RUN locale-gen en_US.UTF-8 && update-locale
 RUN echo 'LANG="en_US.UTF-8"' > /etc/default/locale
-RUN apt-get update && apt-get install wget -yq
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
-    sudo apt-key add -
+    apt-key add -
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update && apt-get upgrade -y \
